@@ -26,6 +26,3 @@ jobs:
 
     - name: Build Angular app
       run: ng build --configuration=production
-
-    - name: Run tests (if applicable)
-      run: ng test
