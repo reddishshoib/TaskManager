@@ -1,0 +1,8 @@
+<div class="pageContainer mx-auto px-4">
+  <div *ngFor="let task of tasks" class= "container">
+    <p class="title">{{task.title}}</p>
+  </div>
+
+  <app-task-form (saveTask)="onSaveTask($event)" *ngIf="isPopUpVisible"></app-task-form>
+  <button class="addTaskButton" (click)="togglePopUp()">Add Task</button>
+</div>

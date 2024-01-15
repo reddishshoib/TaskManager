@@ -1,0 +1,14 @@
+<div class="formContainer ">
+  <form [formGroup]="taskForm"  (ngSubmit)="onSubmit()">
+    <div>
+      <label class="label" for="title">Task:</label>
+      <input class="input"  type="text" id="title"  formControlName='title'  required>
+    </div>
+    <div>
+      <label class="label" for="description">Descriptions</label>
+      <input class="input" type="text" id="description"  formControlName='description' >
+    </div>
+
+    <button class="saveButton" [ngClass]="{'crimson-button': !isFormValid()}" type="submit" [disabled]="!taskForm.valid">Save</button>
+  </form>
+</div>
