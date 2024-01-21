@@ -1,8 +1,13 @@
 <div class="pageContainer mx-auto px-4">
-  <div *ngFor="let task of tasks" class= "container">
+  <div *ngFor="let task of tasks" class= "container" >
     <p class="title">{{task.title}}</p>
+    <button (click)="delete(task.id)" class="delete-button">
+      <i class="fas fa-trash-alt"></i> Delete
+    </button>
+
   </div>
 
   <app-task-form (saveTask)="onSaveTask($event)" *ngIf="isPopUpVisible"></app-task-form>
-  <button class="addTaskButton" (click)="togglePopUp()">Add Task</button>
+  <button class="addTaskButton" (click)="togglePopUp()" *ngIf="!isPopUpVisible">Add Task</button>
+  <button class="addTaskButton" (click)="togglePopUp()" *ngIf="isPopUpVisible">Close</button>
 </div>

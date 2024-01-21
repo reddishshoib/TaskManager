@@ -42,4 +42,8 @@ export class TaskListComponent implements OnInit{
       }
     )
   }
+
+  delete(id: number) {
+    
+  }
 }
