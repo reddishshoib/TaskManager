@@ -27,7 +27,4 @@ export class TaskFormComponent {
     return this.taskForm.valid;
   }
 
-  onSaveTask($event: any) {
-
-  }
 }

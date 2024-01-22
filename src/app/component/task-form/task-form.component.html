@@ -6,7 +6,7 @@
     </div>
     <div>
       <label class="label" for="description">Descriptions</label>
-      <input class="input" type="text" id="description"  formControlName='description' >
+      <input class="input" type="text" id="description"  formControlName='description' autocomplete="off"  >
     </div>
 
     <button class="saveButton" [ngClass]="{'crimson-button': !isFormValid()}" type="submit" [disabled]="!taskForm.valid">Save</button>
