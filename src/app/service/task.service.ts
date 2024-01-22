@@ -24,6 +24,14 @@ export class TaskService {
     return this.http.post(this.apiUrl, newTask, { observe: 'response' });
   }
   deleteById(id: number):Observable<HttpResponse<any>>{
-    return  this.http.delete(`${this.apiUrl}/${id}`,{observe:'response'})
+    return  this.http.delete(`${this.apiUrl}/${id}`,{observe:'response'});
+  }
+
+  getTaskById(id:number): Observable<Task>{
+    return  this.http.get<Task>(`${this.apiUrl}/${id}`);
+  }
+
+  updateTask(updatedTask: Task):Observable<HttpResponse<any>> {
+    return  this.http.put(`${this.apiUrl}/${updatedTask.id}`,updatedTask,{observe:'response'});
   }
 }

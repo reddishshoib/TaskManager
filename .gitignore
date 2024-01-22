@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 /.angular/
 
-db.json
+/db.json

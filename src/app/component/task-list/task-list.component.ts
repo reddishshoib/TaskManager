@@ -1,7 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Task} from "../../model/task";
 import {TaskService} from "../../service/task.service";
-import {max} from "rxjs";
 
 @Component({
   selector: 'app-task-list',
@@ -12,6 +11,7 @@ export class TaskListComponent implements OnInit{
 
   tasks:Task[]=[]
   isPopUpVisible:boolean =  false
+  taskToEdit: Task | null = null;
   togglePopUp(){
     this.isPopUpVisible = !this.isPopUpVisible
   }
@@ -31,27 +31,44 @@ export class TaskListComponent implements OnInit{
   }
 
   onSaveTask(task:Task){
-    task.id = this.getNextTaskId();
-    this.tasks.push(task);
     console.log(task.id)
-    console.log(task)
-    this.taskService.addTask(task).subscribe(
-
-      (response)=>{
-        if (response.ok){
-          console.log("Task Added Successfully", response.status)
-        }else{
-          console.log("Task Not Added")
+    if (task.id){
+      const index = this.tasks.findIndex(t => t.id === task.id);
+      // if (index !== -1) {
+      this.tasks[index] = task;
+      this.taskService.updateTask(task).subscribe(
+        (response)=>{
+          if (response.ok){
+            console.log('Task Updated Successfully', response.status)
+            this.isPopUpVisible = !this.isPopUpVisible
+          }else {
+            console.log('Task Not Updated')
+          }
+        },
+        (error)=>{
+          console.log('Error  Updating task', error)
         }
-      },
-      error => {
-        console.log("Error saving task",error);
-      }
-    )
+      )
+    }else{
+      task.id = this.getNextTaskId();
+      this.tasks.push(task);
+      this.taskService.addTask(task).subscribe(
+        (response)=>{
+          if (response.ok){
+            console.log("Task Added Successfully", response.status)
+            this.isPopUpVisible = !this.isPopUpVisible
+          }else{
+            console.log("Task Not Added")
+          }
+        },
+        error => {
+          console.log("Error saving task",error);
+        }
+      )
+    }
   }
 
   deletebyid(id: number) {
-    console.log(id);
     this.taskService.deleteById(id).subscribe(
       (response)=>{
         if (response.status ===200){
@@ -69,6 +86,15 @@ export class TaskListComponent implements OnInit{
   }
 
   editbyid(id: number) {
-
+    this.taskService.getTaskById(id).subscribe(
+      (task:Task)=>{
+        this.taskToEdit=task;
+        // console.log(this.taskToEdit)
+        this.togglePopUp()
+      },
+      (error) => {
+        console.log('Error',error)
+      }
+    )
   }
 }
