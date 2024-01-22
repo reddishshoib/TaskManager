@@ -1,27 +1,64 @@
-# AngularImplementationProject
+# Task Manager App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.8.
+Task Manager App is a web application built with Angular and powered by Node.js. It allows users to manage their tasks efficiently with features like adding, editing, and deleting tasks.
 
-## Development server
+## Table of Contents
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- Add new tasks with a title and description.
+- Edit existing tasks to update details.
+- Delete tasks to remove them from the task list.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Getting Started
 
-## Build
+### Prerequisites
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Before you begin, ensure you have the following installed:
 
-## Running unit tests
+- [Node.js](https://nodejs.org/)
+- [Angular CLI](https://angular.io/cli)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Installation
 
-## Running end-to-end tests
+1. Clone the repository:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+   ```bash
+   git clone https://github.com/your-username/TaskManagerNgRx.git
+   cd TaskManagerNgRx
+   ```
+   
+2. Install and Run json-server
 
-## Further help
+   ```bash
+   npm install -g json-server
+   json-server --watch db.json
+   
+2. Run Project
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+   ```bash
+   npm start
+   
+3. Navigate to
+
+   ```bash
+   http://localhost:4201/
+
+
+## Usage
+Use the Task Manager App to organize your tasks efficiently. Add, edit, and delete tasks to streamline your workflow.
+
+
+## Contributing
+Contributions are welcome! If you have any ideas for improvements or new features, feel free to open an issue or submit a pull request.
+
+
+## License
+This project is licensed under the MIT License. Enjoy managing your tasks with Task Manager App!
