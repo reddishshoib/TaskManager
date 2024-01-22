@@ -1,7 +1,7 @@
 <div class="pageContainer mx-auto px-4">
   <div *ngFor="let task of tasks" class= "container" >
     <p class="title">{{task.title}}</p>
-    <button (click)="delete(task.id)" class="delete-button">
+    <button (click)="deletebyid(task.id)" class="delete-button">
       <i class="fas fa-trash-alt"></i> Delete
     </button>
 
