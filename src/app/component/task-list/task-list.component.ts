@@ -68,4 +68,7 @@ export class TaskListComponent implements OnInit{
     return maxId + 1;
   }
 
+  editbyid(id: number) {
+
+  }
 }

@@ -1,9 +1,14 @@
 <div class="pageContainer mx-auto px-4">
   <div *ngFor="let task of tasks" class= "container" >
-    <p class="title">{{task.title}}</p>
-    <button (click)="deletebyid(task.id)" class="delete-button">
-      <i class="fas fa-trash-alt"></i> Delete
-    </button>
+    <p class="title" >{{task.title}}</p>
+    <div class="button-container">
+      <button (click)="editbyid(task.id)" class="edit-button">
+        <i class="fas fa-trash-alt"></i> Edit
+      </button>
+      <button (click)="deletebyid(task.id)" class="delete-button">
+        <i class="fas fa-trash-alt"></i> Delete
+      </button>
+    </div>
 
   </div>
 
