@@ -1,18 +1,20 @@
 <div class="pageContainer mx-auto px-4">
-  <div *ngFor="let task of tasks" class= "container" >
-    <p class="title" >{{task.title}}</p>
-    <div class="button-container">
-      <button (click)="editbyid(task.id)" class="edit-button">
-        <i class="fas fa-trash-alt"></i> Edit
-      </button>
-      <button (click)="deletebyid(task.id)" class="delete-button">
-        <i class="fas fa-trash-alt"></i> Delete
-      </button>
-    </div>
+  <div *ngIf="tasks$ | async as tasks">
+    <div *ngFor="let task of tasks" class= "container" >
+      <p class="title" >{{task.title}}</p>
+      <div class="button-container">
+        <button (click)="editbyid(task.id)" class="edit-button">
+          <i class="fas fa-trash-alt"></i> Edit
+        </button>
+        <button (click)="deletebyid(task.id)" class="delete-button">
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
+      </div>
 
   </div>
 
   <app-task-form [task]="taskToEdit" (saveTask)="onSaveTask($event)" *ngIf="isPopUpVisible"></app-task-form>
   <button class="addTaskButton" (click)="togglePopUp()" *ngIf="!isPopUpVisible">Add Task</button>
   <button class="addTaskButton" (click)="togglePopUp()" *ngIf="isPopUpVisible">Close</button>
+</div>
 </div>

@@ -1,5 +1,7 @@
-import {Task, TaskState} from "../../model/task";
+import { TaskState} from "../../model/task";
 
 export const initialState: TaskState = {
-  tasks: []
+  tasks: [],
+  loading: false,
+  error:null
 };

@@ -1,6 +1,10 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Task} from "../../model/task";
 import {TaskService} from "../../service/task.service";
+import {Observable} from "rxjs";
+import {select, Store} from "@ngrx/store";
+import {loadTasks} from "../../store/action/task.action";
+import {selectError, selectLoading, selectTasks} from "../../store/selector/task.selector";
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -9,6 +13,9 @@ import {TaskService} from "../../service/task.service";
 export class TaskListComponent implements OnInit{
 
   tasks:Task[]=[]
+  tasks$!: Observable<Task[]>;
+  loading$!: Observable<boolean>;
+  error$!: Observable<any>;
   isPopUpVisible:boolean =  false
   taskToEdit: Task | null = null;
   togglePopUp(){
@@ -17,24 +24,14 @@ export class TaskListComponent implements OnInit{
 
   constructor(
     private taskService:TaskService,
-    private changeDetector:ChangeDetectorRef
+    private changeDetector:ChangeDetectorRef,
+    private store: Store<Task>
   ) {  }
   ngOnInit() {
-
-    //experimenting with reducer
-    const taskArray: Task[] = [
-      { id: 9, title: 'Task 1', description: 'Description 1' },
-      { id: 10, title: 'Task 2', description: 'Description 2' },
-    ];
-    this.taskService.getTask().subscribe((tasks)=>{
-      this.tasks=tasks;
-      this.tasks= [...this.tasks,...taskArray]
-
-    },
-      (error)=>{
-      console.log("Data Not found",error);
-      }
-    );
+    this.store.dispatch(loadTasks());
+    this.tasks$ = this.store.pipe(select(selectTasks));
+    this.loading$ = this.store.pipe(select(selectLoading));
+    this.error$ = this.store.pipe(select(selectError));
   }
 
   onSaveTask(task:Task){

@@ -10,6 +10,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StoreModule} from "@ngrx/store";
 import {taskReducer} from "./store/reducer/task.reducer";
+import {EffectsModule} from "@ngrx/effects";
+import {TaskEffects} from "./store/effects/task.effects";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import {taskReducer} from "./store/reducer/task.reducer";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({tasks:taskReducer})
+    StoreModule.forRoot({ tasks: taskReducer }),
+    EffectsModule.forRoot([TaskEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

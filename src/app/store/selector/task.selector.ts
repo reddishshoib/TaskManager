@@ -3,7 +3,17 @@ import {TaskState} from "../../model/task";
 
 export const selectTaskState = createFeatureSelector<TaskState>('tasks');
 
-export  const selectTasks = createSelector(
+export const selectTasks = createSelector(
   selectTaskState,
-  (state:TaskState)=>state.tasks
-)
+  (state: TaskState) => state.tasks
+);
+
+export const selectLoading = createSelector(
+  selectTaskState,
+  (state: TaskState) => state.loading
+);
+
+export const selectError = createSelector(
+  selectTaskState,
+  (state: TaskState) => state.error
+);
