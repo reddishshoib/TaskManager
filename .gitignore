@@ -43,3 +43,4 @@ Thumbs.db
 /.angular/
 
 /db.json
+/.vscode/
