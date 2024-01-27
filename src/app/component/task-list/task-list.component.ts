@@ -37,21 +37,7 @@ export class TaskListComponent implements OnInit{
 
   onSaveTask(task:Task){
     if (task.id || task.id===0){
-      const index = this.tasks.findIndex(t => t.id === task.id);
-      this.tasks[index] = task;
-      this.taskService.updateTask(task).subscribe(
-        (response)=>{
-          if (response.ok){
-            console.log('Task Updated Successfully', response.status)
-            this.isPopUpVisible = !this.isPopUpVisible
-          }else {
-            console.log('Task Not Updated')
-          }
-        },
-        (error)=>{
-          console.log('Error  Updating task', error)
-        }
-      )
+      this.store.dispatch(TaskActions.editTask({task}))
     }else{
       this.store.dispatch(TaskActions.saveNew({ task }));
     }

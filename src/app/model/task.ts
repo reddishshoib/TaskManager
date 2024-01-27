@@ -7,5 +7,6 @@ export interface Task {
 export interface TaskState {
   tasks: Task[];
   loading: boolean,
-  error:any
+  error:any,
+  editing?:boolean
 }

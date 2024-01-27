@@ -16,10 +16,11 @@ export class TaskService {
     return  this.http.get<Task[]>(this.apiUrl)
   }
 
-  //Returning the task so ommited
+  // Returning the task so omitted
   // addTask(newTask:Task): Observable<Task>{
   //   return  this.http.post<Task>(this.apiUrl,newTask )
   // }
+
   addTask(newTask: Task): Observable<Task> {
     return this.http.post<Task>(this.apiUrl, newTask);
   }
@@ -31,7 +32,7 @@ export class TaskService {
     return  this.http.get<Task>(`${this.apiUrl}/${id}`);
   }
 
-  updateTask(updatedTask: Task):Observable<HttpResponse<any>> {
-    return  this.http.put(`${this.apiUrl}/${updatedTask.id}`,updatedTask,{observe:'response'});
+  updateTask(updatedTask: Task):Observable<Task> {
+    return  this.http.put<Task>(`${this.apiUrl}/${updatedTask.id}`,updatedTask,);
   }
 }

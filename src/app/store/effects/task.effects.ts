@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import {of, tap} from 'rxjs';
+import {of} from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { TaskService } from '../../service/task.service';
 import * as TaskActions from './../action/task.action';
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {Task} from "../../model/task";
 
 @Injectable()
@@ -51,6 +50,18 @@ export class TaskEffects {
               catchError(error => of(TaskActions.saveNewFailure({ error })))
             )
           )
+        )
+      )
+    )
+  );
+
+  editTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskActions.editTask),
+      mergeMap(({ task }) =>
+        this.taskService.updateTask(task).pipe(
+          map((editedTask) => TaskActions.editSuccessTask({ task: editedTask })),
+          catchError((error) => of(TaskActions.editFailureTask({ error })))
         )
       )
     )
