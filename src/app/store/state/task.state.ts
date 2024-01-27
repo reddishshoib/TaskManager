@@ -3,5 +3,6 @@ import { TaskState} from "../../model/task";
 export const initialState: TaskState = {
   tasks: [],
   loading: false,
-  error:null
+  error:null,
+  taskToEdit: null,
 };

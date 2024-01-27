@@ -1,48 +1,58 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Task} from "../../model/task";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {select, Store} from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Task } from "../../model/task";
+import {selectTaskToEdit} from "../../store/selector/task.selector";
 
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.css'
+  styleUrls: ['./task-form.component.css']
 })
-export class TaskFormComponent {
+export class TaskFormComponent implements OnInit {
   @Output() saveTask = new EventEmitter<Task>();
-  @Input() task:Task | null = null
-  taskForm :FormGroup
+  taskForm: FormGroup;
+  taskToEdit$ : Observable<Task | null>
 
-  constructor(private formBuilder: FormBuilder) {
-    this.taskForm= this.formBuilder.group({
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private store: Store<any>
+  ) {
+    this.taskForm = this.formBuilder.group({
       id: null,
-      title:['',Validators.required],
-      description:['']
+      title: ['', Validators.required],
+      description: ['']
     });
+    this.taskToEdit$ = this.store.pipe(select(selectTaskToEdit));
+
   }
 
   ngOnInit() {
-    this.initForm()
+    this.taskToEdit$.subscribe(task => {
+      if (task) {
+        this.initForm(task);
+      }
+    });
   }
 
-  initForm(){
-    if (this.task){
-      this.taskForm.setValue({
-        id: this.task.id  ,
-        title: this.task.title || '',
-        description:this.task.description || ''
-      });
-    }else {
-      this.taskForm.reset()
+  initForm(task: Task) {
+    this.taskForm.setValue({
+      id: task.id,
+      title: task.title || '',
+      description: task.description || ''
+    });
+  }
+
+  onSubmit() {
+    if (this.taskForm.valid) {
+      this.saveTask.emit(this.taskForm.value);
+      this.taskForm.reset();
     }
   }
-  onSubmit(){
-    if(this.taskForm.valid){
-      this.saveTask.emit(this.taskForm.value)
-      this.taskForm.reset()
-    }
-  }
+
   isFormValid() {
     return this.taskForm.valid;
   }
-
 }

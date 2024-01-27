@@ -4,7 +4,7 @@ import {TaskService} from "../../service/task.service";
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {loadTasks} from "../../store/action/task.action";
-import {selectError, selectLoading, selectTasks} from "../../store/selector/task.selector";
+import {selectError, selectLoading, selectTasks, selectTaskToEdit} from "../../store/selector/task.selector";
 import * as TaskActions from '../../store/action/task.action';
 @Component({
   selector: 'app-task-list',
@@ -18,16 +18,13 @@ export class TaskListComponent implements OnInit{
   loading$!: Observable<boolean>;
   error$!: Observable<any>;
   isPopUpVisible:boolean =  false
-  taskToEdit: Task | null = null;
-  togglePopUp(){
-    this.isPopUpVisible = !this.isPopUpVisible
-  }
 
   constructor(
     private taskService:TaskService,
     private changeDetector:ChangeDetectorRef,
     private store: Store<Task>
-  ) {  }
+  ) {
+  }
   ngOnInit() {
     this.store.dispatch(loadTasks());
     this.tasks$ = this.store.pipe(select(selectTasks));
@@ -47,20 +44,16 @@ export class TaskListComponent implements OnInit{
     this.store.dispatch(TaskActions.deleteById({id}))
   }
 
-  getNextTaskId(): number {
-    const maxId = Math.max(...this.tasks.map(task => task.id), 0);
-    return maxId + 1;
+  editbyid(id: number) {
+    this.store.dispatch(TaskActions.getTaskById({id}))
+    this.togglePopUp()
   }
 
-  editbyid(id: number) {
-    this.taskService.getTaskById(id).subscribe(
-      (task:Task)=>{
-        this.taskToEdit=task;
-        this.togglePopUp()
-      },
-      (error) => {
-        console.log('Error',error)
-      }
-    )
+  togglePopUp(){
+    this.isPopUpVisible = !this.isPopUpVisible
+  }
+
+  addTask() {
+    this.togglePopUp()
   }
 }

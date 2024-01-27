@@ -17,3 +17,7 @@ export const saveNewFailure = createAction('[Task] Save New Task  FAILURE',props
 export const editTask = createAction('[Task] Edit Task',props<{task:Task}>())
 export const editSuccessTask = createAction('[Task] Edit Task Success', props<{ task: Task }>());
 export const editFailureTask = createAction('[Task] Edit  Task  FAILURE',props<{error:any }>())
+
+export const getTaskById = createAction('[Task] Get Task By Id',props<{id:number}>())
+export const getTaskByIdSuccess = createAction('[Task] Get Task Success',props<{task:Task}>())
+export const getTaskByIdFailure = createAction('[task] Get Task Failure', props<{ error: any }>())

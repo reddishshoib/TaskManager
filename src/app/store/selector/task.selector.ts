@@ -1,5 +1,6 @@
 import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {TaskState} from "../../model/task";
+import {Task, TaskState} from "../../model/task";
+import {state} from "@angular/animations";
 
 export const selectTaskState = createFeatureSelector<TaskState>('tasks');
 
@@ -16,4 +17,9 @@ export const selectLoading = createSelector(
 export const selectError = createSelector(
   selectTaskState,
   (state: TaskState) => state.error
+);
+
+export const selectTaskToEdit = createSelector(
+  selectTaskState,
+  (state: TaskState) => state.taskToEdit
 );

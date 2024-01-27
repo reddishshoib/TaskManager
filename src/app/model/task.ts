@@ -9,4 +9,5 @@ export interface TaskState {
   loading: boolean,
   error:any,
   editing?:boolean
+  taskToEdit: Task | null
 }
