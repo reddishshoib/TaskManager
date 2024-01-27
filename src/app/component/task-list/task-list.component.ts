@@ -57,5 +57,7 @@ export class TaskListComponent implements OnInit{
 
   addTask() {
     this.togglePopUp()
+    this.store.dispatch(TaskActions.getTaskById({id:-1}))
+
   }
 }

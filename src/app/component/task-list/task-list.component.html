@@ -1,6 +1,6 @@
 <div class="pageContainer mx-auto px-4">
-  <div *ngIf="tasks$ | async as tasks">
-    <div *ngFor="let task of tasks" class= "container" >
+  <div *ngFor="let task of (tasks$ | async)">
+    <div *ngIf="task.id !== -1" class= "container" >
       <p class="title" >{{task.title}}</p>
       <div class="button-container">
         <button (click)="editbyid(task.id)" class="edit-button">

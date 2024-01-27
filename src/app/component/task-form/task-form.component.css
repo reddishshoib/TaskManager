@@ -9,7 +9,7 @@
   font-bold
   py-10 px-20
   rounded-2xl
-  absolute  bottom-32 right-24
+  fixed  bottom-32 right-24
   border-x-2
   border-y-4
 }
