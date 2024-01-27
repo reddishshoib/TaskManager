@@ -1,6 +1,5 @@
 import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {Task, TaskState} from "../../model/task";
-import {state} from "@angular/animations";
+import { TaskState} from "../../model/task";
 
 export const selectTaskState = createFeatureSelector<TaskState>('tasks');
 

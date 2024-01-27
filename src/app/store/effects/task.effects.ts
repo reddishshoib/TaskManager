@@ -5,8 +5,6 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import { TaskService } from '../../service/task.service';
 import * as TaskActions from './../action/task.action';
 import {Task} from "../../model/task";
-import {error} from "@angular/compiler-cli/src/transformers/util";
-
 @Injectable()
 export class TaskEffects {
 

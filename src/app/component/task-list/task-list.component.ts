@@ -1,10 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {Task} from "../../model/task";
-import {TaskService} from "../../service/task.service";
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {loadTasks} from "../../store/action/task.action";
-import {selectError, selectLoading, selectTasks, selectTaskToEdit} from "../../store/selector/task.selector";
+import {selectError, selectLoading, selectTasks} from "../../store/selector/task.selector";
 import * as TaskActions from '../../store/action/task.action';
 @Component({
   selector: 'app-task-list',
@@ -18,10 +17,8 @@ export class TaskListComponent implements OnInit{
   loading$!: Observable<boolean>;
   error$!: Observable<any>;
   isPopUpVisible:boolean =  false
-  id:number=-2
+  currentEditId: number | null = null;
   constructor(
-    private taskService:TaskService,
-    private changeDetector:ChangeDetectorRef,
     private store: Store<Task>
   ) {
   }
@@ -46,10 +43,13 @@ export class TaskListComponent implements OnInit{
   }
 
   editbyid(id: number) {
-    if (!this.isPopUpVisible)  this.togglePopUp()
+    if (this.currentEditId === id) {
+      this.togglePopUp();
+    } else {
+      this.currentEditId = id;
+      this.isPopUpVisible = true;
+    }
     this.store.dispatch(TaskActions.getTaskById({id}))
-    if (this.id===id) this.togglePopUp()
-    this.id=id
   }
 
   togglePopUp(){
@@ -58,7 +58,5 @@ export class TaskListComponent implements OnInit{
 
   addTask() {
     this.togglePopUp()
-    this.store.dispatch(TaskActions.getTaskById({id:-1}))
-
   }
 }
