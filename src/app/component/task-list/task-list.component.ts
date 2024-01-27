@@ -18,7 +18,7 @@ export class TaskListComponent implements OnInit{
   loading$!: Observable<boolean>;
   error$!: Observable<any>;
   isPopUpVisible:boolean =  false
-
+  id:number=-2
   constructor(
     private taskService:TaskService,
     private changeDetector:ChangeDetectorRef,
@@ -46,9 +46,10 @@ export class TaskListComponent implements OnInit{
   }
 
   editbyid(id: number) {
-    if (this.isPopUpVisible) this.togglePopUp()
+    if (!this.isPopUpVisible)  this.togglePopUp()
     this.store.dispatch(TaskActions.getTaskById({id}))
-    this.togglePopUp()
+    if (this.id===id) this.togglePopUp()
+    this.id=id
   }
 
   togglePopUp(){
