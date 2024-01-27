@@ -33,6 +33,7 @@ export class TaskListComponent implements OnInit{
   }
 
   onSaveTask(task:Task){
+    this.togglePopUp()
     if (task.id || task.id===0){
       this.store.dispatch(TaskActions.editTask({task}))
     }else{
@@ -45,6 +46,7 @@ export class TaskListComponent implements OnInit{
   }
 
   editbyid(id: number) {
+    if (this.isPopUpVisible) this.togglePopUp()
     this.store.dispatch(TaskActions.getTaskById({id}))
     this.togglePopUp()
   }
