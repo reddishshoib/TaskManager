@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { of } from 'rxjs';
+import {of, tap} from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { TaskService } from '../../service/task.service';
 import * as TaskActions from './../action/task.action';
+import {error} from "@angular/compiler-cli/src/transformers/util";
+import {Task} from "../../model/task";
 
 @Injectable()
 export class TaskEffects {
@@ -31,8 +33,36 @@ export class TaskEffects {
         )
     );
 
+  saveNew$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskActions.saveNew),
+      mergeMap(action =>
+        this.taskService.getTask().pipe(
+          map(tasks => ({
+            tasks,
+            newTaskId: this.getNextTaskId(tasks)
+          })),
+          mergeMap(({ tasks, newTaskId }) =>
+            this.taskService.addTask({
+              ...action.task,
+              id: newTaskId
+            }).pipe(
+              map(task => TaskActions.saveNewSuccess({ task })),
+              catchError(error => of(TaskActions.saveNewFailure({ error })))
+            )
+          )
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private taskService: TaskService
   ) {}
+
+  getNextTaskId(tasks: Task[]): number {
+    const maxId = Math.max(...tasks.map(task => task.id), 0);
+    return maxId + 1;
+  }
 }

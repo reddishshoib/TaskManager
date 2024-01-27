@@ -8,5 +8,9 @@ export const taskReducer = createReducer(
   on(TaskActions.deleteByIdSuccess,(state,{id})=>({
     ...state,
     tasks:state.tasks.filter(task=>task.id!=id)
+  })),
+  on(TaskActions.saveNewSuccess,(state,{task})=>({
+    ...state,
+    tasks: [...state.tasks,task]
   }))
   )

@@ -36,7 +36,6 @@ export class TaskListComponent implements OnInit{
   }
 
   onSaveTask(task:Task){
-    console.log(task.id,'hello')
     if (task.id || task.id===0){
       const index = this.tasks.findIndex(t => t.id === task.id);
       this.tasks[index] = task;
@@ -54,21 +53,7 @@ export class TaskListComponent implements OnInit{
         }
       )
     }else{
-      task.id = this.getNextTaskId();
-      this.tasks.push(task);
-      this.taskService.addTask(task).subscribe(
-        (response)=>{
-          if (response.ok){
-            console.log("Task Added Successfully", response.status)
-            this.isPopUpVisible = !this.isPopUpVisible
-          }else{
-            console.log("Task Not Added")
-          }
-        },
-        error => {
-          console.log("Error saving task",error);
-        }
-      )
+      this.store.dispatch(TaskActions.saveNew({ task }));
     }
   }
 
