@@ -16,6 +16,8 @@ Task Manager App is a web application built with Angular and powered by Node.js.
 - Add new tasks with a title and description.
 - Edit existing tasks to update details.
 - Delete tasks to remove them from the task list.
+- Store and Effects from NgRx are used.
+- JSON server is used for now.
 
 ## Getting Started
 

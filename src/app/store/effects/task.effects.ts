@@ -19,6 +19,17 @@ export class TaskEffects {
       )
     )
   );
+  deleteById$ = createEffect(()=>
+    this.actions$.pipe(
+      ofType(TaskActions.deleteById),
+        mergeMap(({id})=>
+          this.taskService.deleteById(id).pipe(
+            map(()=>TaskActions.deleteByIdSuccess({id})),
+            catchError(error => of(TaskActions.deleteByIdFailure({id,error})))
+          )
+        )
+        )
+    );
 
   constructor(
     private actions$: Actions,

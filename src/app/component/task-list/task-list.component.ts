@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {loadTasks} from "../../store/action/task.action";
 import {selectError, selectLoading, selectTasks} from "../../store/selector/task.selector";
+import * as TaskActions from '../../store/action/task.action';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -72,15 +73,7 @@ export class TaskListComponent implements OnInit{
   }
 
   deletebyid(id: number) {
-    this.taskService.deleteById(id).subscribe(
-      (response)=>{
-        if (response.status ===200){
-          console.log('Deleted Succefully')
-          this.tasks= this.tasks.filter(task=>task.id!==id)
-          this.changeDetector.detectChanges()
-        }
-      }
-    )
+    this.store.dispatch(TaskActions.deleteById({id}))
   }
 
   getNextTaskId(): number {
@@ -92,7 +85,6 @@ export class TaskListComponent implements OnInit{
     this.taskService.getTaskById(id).subscribe(
       (task:Task)=>{
         this.taskToEdit=task;
-        // console.log(this.taskToEdit)
         this.togglePopUp()
       },
       (error) => {
