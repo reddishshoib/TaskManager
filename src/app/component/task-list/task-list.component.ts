@@ -1,7 +1,9 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {Task} from "../../model/task";
+import {Task} from "../../store/model/task";
 import {TaskService} from "../../service/task.service";
-
+import {Store} from "@ngrx/store";
+import {taskLoaded} from "../../store/action/task.action";
+import  * as TaskActions from "./../../store/action/task.action"
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -18,11 +20,22 @@ export class TaskListComponent implements OnInit{
 
   constructor(
     private taskService:TaskService,
-    private changeDetector:ChangeDetectorRef
+    private changeDetector:ChangeDetectorRef,
+    private  store:Store<Task>
   ) {  }
   ngOnInit() {
+
+    //experimenting with reducer
+    const taskArray: Task[] = [
+      { id: 9, title: 'Task 1', description: 'Description 1' },
+      { id: 10, title: 'Task 2', description: 'Description 2' },
+    ];
+
+    this.store.dispatch(taskLoaded({ tasks: taskArray }));
     this.taskService.getTask().subscribe((tasks)=>{
-      this.tasks=tasks
+      this.tasks=tasks;
+      this.tasks= [...this.tasks,...taskArray]
+
     },
       (error)=>{
       console.log("Data Not found",error);
@@ -31,10 +44,10 @@ export class TaskListComponent implements OnInit{
   }
 
   onSaveTask(task:Task){
-    console.log(task.id)
-    if (task.id){
+    console.log(task.id,'hello')
+    this.store.dispatch(TaskActions.addTask({task}))
+    if (task.id || task.id===0){
       const index = this.tasks.findIndex(t => t.id === task.id);
-      // if (index !== -1) {
       this.tasks[index] = task;
       this.taskService.updateTask(task).subscribe(
         (response)=>{

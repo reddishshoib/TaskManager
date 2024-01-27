@@ -29,7 +29,9 @@
 }
 
 .title {
-  @apply text-4xl capitalize  font-bold  mb-3;
+  @apply text-2xl capitalize  font-bold  mb-3;
   margin-left: 4vh;
   cursor: pointer;
 }
+
+

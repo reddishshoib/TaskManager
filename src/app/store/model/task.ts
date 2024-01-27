@@ -3,3 +3,7 @@ export interface Task {
   title:string,
   description:string
 }
+
+export interface TaskState {
+  tasks: Task[];
+}

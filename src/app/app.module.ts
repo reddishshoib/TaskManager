@@ -8,6 +8,8 @@ import { TaskFormComponent } from './component/task-form/task-form.component';
 import { TaskDetailsComponent } from './component/task-details/task-details.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {StoreModule} from "@ngrx/store";
+import {taskReducer} from "./store/reducer/task.reducer";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot({tasks:taskReducer})
   ],
   providers: [],
   bootstrap: [AppComponent]

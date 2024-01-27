@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Task} from "../../model/task";
+import {Task} from "../../store/model/task";
 
 @Component({
   selector: 'app-task-form',
