@@ -11,7 +11,7 @@
         </button>
       </div>
     </div>
-    <app-task-form  (saveTask)="onSaveTask($event)" *ngIf="isPopUpVisible"></app-task-form>
+    <app-task-form [addTask]="addTaskCheck"  (saveTask)="onSaveTask($event)" *ngIf="isPopUpVisible"></app-task-form>
     <button class="addTaskButton" (click)="addTask()" *ngIf="!isPopUpVisible">Add Task</button>
     <button class="addTaskButton" (click)="togglePopUp()" *ngIf="isPopUpVisible">Close</button>
   </div>

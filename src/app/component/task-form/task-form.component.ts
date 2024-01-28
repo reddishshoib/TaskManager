@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {select, Store} from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ import {selectTaskToEdit} from "../../store/selector/task.selector";
 })
 export class TaskFormComponent implements OnInit {
   @Output() saveTask = new EventEmitter<Task>();
+  @Input() addTask!:boolean
   taskForm: FormGroup;
   taskToEdit$ : Observable<Task | null>
 
@@ -30,11 +31,19 @@ export class TaskFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.taskToEdit$.subscribe(task => {
-      if (task) {
-        this.initForm(task);
-      }
-    });
+    if (this.addTask){
+      this.taskForm.setValue({
+        id: null,
+        title:  '',
+        description: ''
+      });
+    }else{
+      this.taskToEdit$.subscribe(task => {
+        if (task) {
+          this.initForm(task);
+        }
+      });
+    }
   }
 
   initForm(task: Task) {

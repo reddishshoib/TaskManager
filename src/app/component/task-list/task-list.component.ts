@@ -11,13 +11,14 @@ import * as TaskActions from '../../store/action/task.action';
   styleUrl: './task-list.component.css'
 })
 export class TaskListComponent implements OnInit{
-
   tasks:Task[]=[]
   tasks$!: Observable<Task[]>;
   loading$!: Observable<boolean>;
   error$!: Observable<any>;
   isPopUpVisible:boolean =  false
   currentEditId: number | null = null;
+  addTaskCheck!:boolean
+
   constructor(
     private store: Store<Task>
   ) {
@@ -43,6 +44,7 @@ export class TaskListComponent implements OnInit{
   }
 
   editbyid(id: number) {
+    this.addTaskCheck=false
     if (this.currentEditId === id) {
       this.togglePopUp();
     } else {
@@ -57,6 +59,7 @@ export class TaskListComponent implements OnInit{
   }
 
   addTask() {
+    this.addTaskCheck=true
     this.togglePopUp()
   }
 }
